@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="text/javascript" >
+
+			let data = {
+				name:'尚硅谷',
+				address:'北京',
+			}
+
+			//创建一个监视的实例对象，用于监视data中属性的变化
+			const obs = new Observer(data)		
+			console.log(obs)	
+
+			//准备一个vm实例对象
+			let vm = {}
+			vm._data = data = obs
+			// 如果只写一步 vm._data = data
+			// data就是
+			// {
+			// 	name:'尚硅谷',
+			// 	address:'北京',
+			// }
+			// vm._data就是
+			// {
+			// 	name:'尚硅谷',
+			// 	address:'北京',
+			// 	get...
+			// 	set...
+			// }
+
+			//写成vm._data = data = obs 
+			//注意 vm._data = data 地址相同 而且原来的data没了
+			// 大家都是
+			// {
+			// 	name:'尚硅谷',
+			// 	address:'北京',
+			// 	get...
+			// 	set...
+			// }
+
+			// 在这里构造obs的时候 obj是一个形参 data的数据作为参数传递到了obs内部
+			// 因此 obs在数据绑定的时候 用的是自己内部obj 在传递完参数后data对于obs就没用了 用的都是自己内部的obj
+
+			//这里的data(一般都是放在vue的构造函数里面的 我们访问不到) 就是 平常的vm.data
+			//vm._data 就是 vm._data
+
+			function Observer(obj){
+				//汇总对象中所有的属性形成一个数组
+				const keys = Object.keys(obj)
+				//遍历
+				keys.forEach((k)=>{
+					Object.defineProperty(this,k,{
+						get(){
+							return obj[k]
+							// obj.k是属性名，obj[k]是属性值
+						},
+						set(val){
+							console.log(`${k}被改了，我要去解析模板，生成虚拟DOM.....我要开始忙了`)
+							// 在set里面写一段解析模板的代码 因此修改data或者vm._data都会触发 导致页面更新
+							// 通过这段代码 就可以实现修改data 
+							obj[k] = val
+						}
+					})
+				})
+			}
+
+			// 传入一个data对象 在构造函数Observer中造了一个新的对象 obs
+			// obs的属性都是通过数据代理从data上绑到data的
+			// get obs返回data的值 set obs修改data的值
+			//这样 obs里面就有了data的属性 以及get set 方法
+
+			//把obs给vm
+			
+			//注意啊 vm.name 就是 data.name vm._data.name是通过vm.name产生的 ? ?
+			//vm.name 通过 vm._data.name 数据代理产生 ? ?
+			//它们一定相等
+
+			//修改vm.name 和 vm._data.name都会同时修改
+
+
+		</script>
+	</body>
+</html>

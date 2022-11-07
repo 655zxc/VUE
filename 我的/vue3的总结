@@ -1,0 +1,127 @@
+2022.2.15-2.16
+
+1.创建方式
+    传统cli 和 vite
+    记住两幅图
+    
+2.setup
+    可以直接把数据,方法东西写进去
+    (就像data的数据被绑定到组件上)
+    然后作为一个对象返回
+
+3.ref函数
+    不是组件的ref属性
+    定义数据XX时,加上ref,会把这条数据XX变成一个封装的对象RefImpl,改变的时候需要用XX.value
+    里面会用getset配置这条数据,这样变成了响应式
+    否则改变数据,页面不会变
+    当数据是对象时XX.value.属性
+
+    备注：
+    接收的数据可以是：基本类型、也可以是对象类型。
+    基本类型的数据：响应式依然是靠Object.defineProperty()的get与set完成的。
+    对象类型的数据：内部 “ 求助 ” 了Vue3.0中的一个新函数—— reactive函数。
+
+4.reactive函数
+    把一个对象变成响应式的
+    内部基于 ES6 的 Proxy 实现
+    传入一个对象,Proxy函数生成一个新的封装好的对象,返回
+
+5.Vue3的响应式原理
+    看md
+    5.1.vue2
+        因为vue2通过Object.defineProperty()实现响应式
+        只能实现set get的响应式
+        因此存在问题存在问题：
+        新增属性、删除属性, 界面不会更新。
+        直接通过下标修改数组, 界面不会自动更新
+        vue2添加删除需要用$set 和 delete
+    5.2.vue3
+        使用Proxy实现
+        简便多了,只需要写一个get,不需要有多少个属性就写多少个get
+        (注意因为propName是形参(变量)，形参直接点相当于找propName,因此用[]不用.)
+        访问时触发proxy里的get,修改触发set
+        删除时会触发deleteProperty方法
+        添加时也会触发set方法
+        方法里面使用Reflect修改源数据
+
+        通过Proxy（代理）: 拦截对象中任意属性的变化, 包括：属性值的读写、属性的添加、属性的删除等。
+        通过Reflect（反射）: 对源对象的属性进行操作
+
+*6.reactive对比ref
+    看md
+
+7.setup的注意点
+    vue2中,父组件向子组件传递,插槽内容存在$slot里,传递参数存在$attr里
+    vue3中,父组件向子组件传递,setup(a,b){}有两个参数,第一个是传递的参数,第二个是其他
+            setup在beforecreate前执行,因此在setup中this是undefined
+
+8.vue3的computed
+    从配置项变成了一个函数
+
+9.vue3的watch
+    同上
+    但存在问题,当watch监视reactive定义的数据,无法获得正确的oldvalue
+    这个其实好理解，监视的对象是一个地址，修改对象里的值，引用地址不变，所以旧值和新值一样呗
+    reactive强制开启深度监视
+    五种情况详见md
+    
+10.watcheffect
+    监视的回调中用到哪个属性，那就监视哪个属性。
+
+11.生命周期
+    vue3的不同:
+    最后两部改名
+    把判断有无el环节放到最前面
+    八个生命周期函数可以放在setup中写成组合式API,也可以像以前一样写成配置项
+
+12.自定义hook
+    (组件卸载时,注意移出之前添加的原生事件)
+    例如,把添加事件,移除事件写成一个hook方便复用
+    引入,添加hook的代码到setup中
+    和mixin相似
+
+13.toref
+    一个例子,对象经过proxy包装,变成响应式对象
+    let x = proxy包装的对象.属性
+    x不是响应式的
+    解决方法:使用toref函数包装x,变成refimpl对象,就是响应式的x了
+    创建一个 ref 对象，其value值指向另一个对象中的某个属性
+    (注意:和ref函数不同,ref函数是创建一个对象,但是!!!!!value是自己的)
+    应用: 要将响应式对象中的某个属性单独提供给外部使用时。
+    详见:https://blog.csdn.net/wuxing164/article/details/109801542
+    ...torefs(对象)能把这个对象拆开
+
+14.shallowReactive 与 shallowRef
+    把对象变成浅的响应式 与 只把基本类型变成响应式
+
+15.readonly 与 shallowReadonly
+    把响应式的数据变成不可修改的(return一个新的) 与 浅的不可修改,深的可以修改
+
+16.toRaw 与 markRaw
+    把reactive定义的响应式对象变成普通的(return一个新的),对这个普通对象的所有操作，不会引起页面更新
+    与
+    标记一个对象，使其永远不会再成为响应式对象。
+    (当渲染具有不可变数据源的大列表时，跳过响应式转换可以提高性能)
+
+17.customRef
+    自定义的ref函数
+    
+18.provide 与 inject
+    实现祖与后代组件间通信
+
+19.响应式数据的判断
+
+20.Composition API 的优势
+    之前的太杂,现在的把一个功能的data,methods,computed,watch都集中到一起
+    每个功能分开,而且可以把这些功能写成一个hook函数
+
+21.Fragment
+
+22.Teleport
+    能够将我们的组件html结构移动到指定位置的技术
+    移动位置相当于选择器
+
+23.Suspense
+
+24.其他
+    

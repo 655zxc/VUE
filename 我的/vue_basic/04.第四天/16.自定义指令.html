@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    <div class="box">
+        <p>n的值:{{n}}</p>
+        <p v-big = 'n'></p>
+        <!-- 有参数的自定义指令  在函数中也要用到-->
+        <!-- <input type="text" v-fbind > -->
+        <!-- 没有参数的自定义指令  在函数中就不需要用到-->
+        <button @click = 'n++'>N++</button>
+
+        <input type="text" v-fbind2:value = 'n' >
+    </div>
+    <script>
+        Vue.config.productionTip = false;    
+        new Vue({
+            el:'.box',
+            data:{
+                n:1,
+            },
+            directives:{
+                big(element,binding){
+                    element.innerHTML = 'n放大10倍的值:' + binding.value*10;
+                },
+                //简写方式 相当于只有bind 和 update
+
+
+                // fbind(element,binding){
+                //     element.autofocus = 'autofocus';
+                // },
+
+                fbind2:{
+                    bind(element,binding){
+                        element.value = binding.value;
+                    },
+                    inserted(element,binding){
+                        element.foucs();
+                        element.value = binding.value;
+                    },
+                    update(element,binding){
+                      
+                        element.value = binding.value;
+                        //不是element.innerHTML input没有innerHTML
+                    }
+                }
+
+            }
+        })   
+    </script>
+</body>
+</html>

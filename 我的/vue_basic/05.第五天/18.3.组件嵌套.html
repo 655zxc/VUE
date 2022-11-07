@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    
+    <div class="box">
+           
+    </div>
+    <script>
+        Vue.config.productionTip = false;     
+        
+        const peach = Vue.extend({
+            template:`
+            <div>
+                <h2>color:{{color}}</h2>
+                <h2>name:{{name}}</h2>
+            </div>
+            `,
+            data(){
+                return {
+                    color:'pink',
+                    name:'peach',
+                }
+            }
+        })
+
+
+        const apple = Vue.extend({
+            template:`
+            <div>
+                <h2>color:{{color}}</h2>
+                <h2>name:{{name}}</h2>
+            </div>
+            `,
+            data(){
+                return {
+                    color:'red',
+                    name:'apple',
+                }
+            }
+        })
+
+
+        const friut = Vue.extend({
+            template:`
+            <div>
+                <apple></apple>
+                <peach></peach>    
+            </div>
+            
+            `,
+            components:{
+                apple:apple,
+                peach:peach,
+            }
+        })
+
+        new Vue({
+            el:'.box',
+            template:`
+            <friut></friut>
+            `,
+            components:{
+                friut:friut,
+            }
+        })
+    </script>
+
+    
+</body>
+</html>

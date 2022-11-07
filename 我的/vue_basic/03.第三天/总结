@@ -1,0 +1,45 @@
+2021.11.19
+P31-P39
+
+1.复习数组方法 是否改变原数组?
+7个改变原数组
+
+2.模拟一个数据监测
+
+3.
+调用数组的push
+对象上没有push
+那就顺着原型链往上找
+而是Array的prototype上有push方法
+
+而vm._data里的arr的push
+是vue写的
+里面包括Array的prototype上有push方法的代码
+再加上 解析模板 的代码
+
+vm._data.arr[x] 也就是数组元素 是没有set get方法的
+
+4.Vue.set / vm.$set
+直接添加修改data里的数据 
+自动配上get set 并且更新视图
+
+5.直接修改数组元素 页面不更新 因为没有set没有解析模板的代码
+但是data里的数组是有set方法的 可以直接整个更新
+但是数组元素是对象可以修改
+
+总之 就是看有没有set
+
+// friends 有set
+// friends[0] 没有set 因为无法对索引进行get set
+// friends[0].name 有set
+
+
+5.
+https://zhuanlan.zhihu.com/p/59630613
+
+当访问 【vm.name】，触发代理 【vm.name 设置的get】，就会访问 【vm._data.name】 ，
+从而触发总部 【vm._data.name 设置的get】，这个get 用来依赖收集。最后完全不会影响
+
+
+赋值 【vm.name】，触发代理 【vm.name 设置的 set】，就会直接赋值给总部 【vm._data.name】 ，
+从而触发 【vm._data.name 设置的set 】，这个set，用来依赖更新。最后完全不会影响

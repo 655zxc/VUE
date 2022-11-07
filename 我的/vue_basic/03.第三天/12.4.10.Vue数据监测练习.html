@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    <div class="box">
+        <h1>学生信息</h1>
+    <button @click = 'addage'>+1岁</button>
+    <button @click = 'addsex'>添加性别 男</button>
+    <button @click = 'changesex'>修改性别</button>
+    <button @click = 'addfriend'>首位添加朋友</button>
+    <button @click = 'changesan'>修改第一个朋友为张三</button>
+    <button @click = 'addhobby'>添加一个爱好</button>
+    <button @click = 'changehobby'>修改第一个爱好为开车</button>
+    <button @click = 'removehobby'>去除抽烟的爱好</button>
+    <h2>姓名:{{person.name}}</h2>
+    <h2>年龄:{{person.age}}</h2>
+    <h2 v-show = 'person.sex'>性别:{{person.sex}}</h2>
+    <!-- person.sex不存在,v-show就是false -->
+
+    <h2>爱好:</h2>
+    <ul>
+        <li v-for = '(p,index) in hobby'>
+            {{p}}
+        </li>
+    </ul>
+
+
+    <h2>朋友:</h2>
+    <ul>
+        <li v-for = '(p,index) in friends'>
+            {{p.name}}-{{p.age}}
+        </li>
+    </ul>
+    </div>
+    <script>
+        Vue.config.productionTip = false;  
+        const vm = new Vue({
+            el:'.box',
+            data:{
+                person:{
+                    name:'Tom',
+                    age:18,
+                },
+                hobby:['抽烟','喝酒','烫头'],
+                friends:[
+                    {name:'jerry',age:18},
+                    {name:'tony',age:20}
+                ]
+                //hobby 和 friends 都是数组
+            },
+            methods:{
+                addage(){
+                    this.person.age++;
+                },
+                addsex(){
+                    this.$set(this.person,'sex','男');
+                },
+                changesex(){
+                    if(this.person.sex == '男'){
+                        this.person.sex = '女';
+                    }
+                    else if(this.person.sex == '女'){
+                        this.person.sex = '男';
+                    }
+                },
+                addfriend(){
+                    this.friends.unshift({name:'jack',age:22})
+                },
+                changesan(){
+                    this.friends[0].name = '张三';
+
+                    // friends 有set
+                    // friends[0] 没有set 因为无法对索引进行get set
+                    // friends[0].name 有set
+                    
+
+
+
+
+
+                    // 不管对象在哪儿，数组里也行，改对象属性就能被检测到，
+                    // 但是数组没有属性，检测不到得用方法修改，所以不是下标问题，
+                    // 是看通过下标拿到了什么类型的数据
+                },
+                addhobby(){
+                    this.hobby.push('学习');
+                },
+                changehobby(){
+                    this.hobby.splice(0,1,'开车');
+                    //也可以用Vue.set
+                },
+                removehobby(){
+                    // this.hobby.forEach((p,index)=>{
+                    //     if(p == '抽烟'){
+                    //         this.hobby.splice(index,1);//splice最后个参数不写就是删除
+                    //     }
+                    // })
+
+                    this.hobby = this.hobby.filter(p=>{
+                        return p != '抽烟'
+                    })
+                    //hobby有set 可以改变
+                }
+            }
+
+        })     
+    </script>
+</body>
+</html>

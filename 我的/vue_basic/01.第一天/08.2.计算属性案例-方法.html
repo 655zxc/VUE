@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    <div class="box">
+        姓:<input type="text" @keyup = 'f1' placeholder="张">
+        <br>
+        名:<input type="text" @keyup = 'f2' placeholder="三">
+        <br>
+        全名:<p>{{first}}-{{last}}</p>
+    </div>
+    <script>
+     
+
+
+     
+    //  错误的代码
+
+
+
+
+        Vue.config.productionTip = false;     
+       const vm = new Vue({
+            el:'.box',
+            data:{
+                first: '张',
+                last: '三'
+            },
+            methods:{
+                f1(e){
+                    first = e.target.value;
+                    console.log(first);
+                    //作用域 !!! 两个first毫无关系
+                },
+                f2(e){
+                    last = e.target.value;
+                }
+            }
+        })  
+    </script>
+</body>
+</html>

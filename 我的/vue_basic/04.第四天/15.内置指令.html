@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+    <style>
+        [v-cloak]{
+            display:none;
+          }
+    </style>
+</head>
+<body>
+    
+    <div class="box">
+        <h1 v-text = 'str1'></h1>
+        <!-- 不能写 v-text = '<p>v-text</p>' ? -->
+        <h1 v-text = 'n'></h1>
+        
+        <h1 v-html = 'str2'></h1>
+
+        <h1 v-cloak>v-cloak</h1>
+
+        <h1>正常 : {{n}}</h1>
+
+        <h1 v-once>v-once : n的值{{n}}</h1>
+
+        <h1 v-pre>v-pre : n的值{{n}}</h1>
+        
+        <button @click = 'n++'>N++</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;   
+        
+        new Vue({
+            el:'.box',
+            data:{
+                str1:'<p>v-text</p>',//记得加引号
+                str2:'<p>v-html</p>',
+                n:1,
+            }
+        })
+    </script>
+
+
+</body>
+</html>

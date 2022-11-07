@@ -1,0 +1,78 @@
+2021.11.30
+P119-P135
+
+1.注意点
+路由中切换的组件被销毁了
+route和router
+route存放当前路由信息
+所有组件共享一个router 存放所有路由的共享方法
+
+2.子路由
+children[{},{}]写在父里面 path勿加斜杠
+
+3.query参数
+看details和message两个组件
+双引号里只能接单引号
+<router-link :to="{}"></router-link>
+{
+    path
+    参数{}
+}
+
+4.parmas
+{
+    name
+    参数{}
+}
+
+5.路由的props(不是组件的props)
+props传参写在路由中
+
+6.浏览历史
+默认按照栈的形式保存 不会破坏原有数据
+当加入router-link的replace属性 会替换掉栈顶的浏览历史
+
+7.路由跳转 (不使用router-link)
+push({跳转地址,携带参数}) repalce({跳转地址,携带参数})
+back() forward() go(次数,可正可负)
+
+8.keep-alive标签
+把router-view包起来
+属性include="XX" XX是name组件名 XX不会被销毁
+不写就是全部都不被销毁
+多个:include="[XX,XX]"
+
+9.两个新钩子
+activated和deactivated
+看谁谁就激活 不看谁谁就不激活
+比较
+有keep-alive:创建了就不会销毁
+无keep-alive:看谁谁就被创建 不看谁谁就被销毁
+
+只有被keep-alive缓存的组件才有activated和deactivated
+
+10.路由守卫
+to：进入到哪个路由去，from：从哪个路由离开，next：函数，决定是否展示你要看到的路由页面
+
+路由在配置的时候有属性meta 存这个路由独有的信息 方便处理这个路由(比如用to.meta.XX访问) 在构造函数里设置 和配置path一样
+全局:看40,参数三个,二个,beforeEach,afterEach
+独享:写在构造函数中的路由里,beforeEnter,参数三个
+组件:beforeRouteEnter,beforeRouteLeave,进入组件就会触发,不一定要由路由进入
+
+全局和组件的区别:访问一个路由,beforeEach,afterEach,beforeRouteEnter立即执行
+                但是beforeRouteLeave不执行,因为还没离开路由控制的组件
+
+                组件:任意方式进入组件就会触发,不一定要由路由进入
+                全局,独享:需要路由切换触发
+
+                组件:写在组件里不是路由里,beforeRouteEnter,beforeRouteLeave都需要next()放行
+
+只有afterEach有两个参数
+
+11.hash和history
+在路由构造函数中设置mode:hash/history
+
+12.
+npm run serve创建服务器运行项目
+npm run build生成项目的js css html文件
+得到一个dist文件

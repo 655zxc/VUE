@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    <div class="box">
+        <a :href="url">{{name}}是{{sex.man}}性</a>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        new Vue({
+            el:'.box',
+            data:{
+                url:'https://www.bilibili.com/video/BV1Zy4y1K7SH?p=8',
+                name:'tom',
+                sex:{
+                    man:'男',
+                    woman:'女'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

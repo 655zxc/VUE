@@ -1,0 +1,38 @@
+2021.11.26
+19-21
+P96-P100
+
+
+1.当我们输入地址访问服务器 就是一个get请求
+发现server1 server2
+和axios课里面的db.json一样?
+通过node server1启动
+这和ajax课一样
+
+2.解决跨域
+jsonp
+cors
+代理服务器:
+让代理服务器端口号和前端相同
+代理服务器与访问服务器交互
+服务器之间交换数据是不受同源策略影响的
+同源策略只影响前端和服务器的交互
+
+
+http://localhost:8080/
+这个地址就是public的根目录
+http://localhost:8080/text.txt
+就可以访问text.txt
+因此public有的 就是8080有的
+如果8080有student
+中间代理器就不会去访问5000了
+
+脚手架有配置 
+http://localhost:8080/ 默认访问index
+
+无法配置多个代理
+无法控制走不走代理
+
+3.github这个案例后端写了cors
+可以在一个方法里多次调用this.$bus.$emit传参
+比如axios的成功回调和失败回调里各有this.$bus.$emit

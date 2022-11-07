@@ -1,0 +1,132 @@
+2021.11.29
+P105-P
+
+
+1.灵活使用bind和model
+在23中 value = '1' 会导致value是字符串1
+:value = '1' 可以解决
+
+给n绑定model 可以获取选项框n的值 还可以给选项框设置初始值
+
+2.当对象的键值相同 可以简写
+jia:function(){} 简写 jia(){}
+
+3.复习模块化
+import一个js文件 会直接执行这个js里的代码
+import引入的代码会优先执行 即使import在底部
+
+4.vue.use用来注册插件
+在new插件之前需要执行vue.use(插件)
+
+5.如何使用vuex/写一个store
+看原理图 三个都是对象 a和m里面有方法,s里面有属性
+
+组件中:      dispacth('事件',传值)
+actions中:   事件(){迷你store,接收值} 这个迷你store可以访问上下文数据,有很多方法,
+                                     可以在actions中继续使用dispacth,也可以用state判断当前状态
+actions中:   迷你store.commit('事件',传值) 注意commit的事件要大写
+mutations中: 事件(){state,接收值} state用来修改下一步的state属性
+
+actions在执行前做一些判断
+mutations执行真正的函数处理
+如果不需要actions,在组件中就不需要dispatch 直接commit 
+
+访问方法时 一步一步的做 加上this. state. store.等等
+
+如果在actions中修改state 会导致开发者工具失效 它只监视mutations
+
+6.store中 对象getter 中的函数的参数是state 这个函数需要return
+
+7.mapstate
+简化组件提取state的名字
+在mapState中可以直接写state属性的字符串形式,不需要this.$store.state去找
+需要引入
+import {mapState,mapGetters} from 'vuex'
+
+8.
+扩展运算符接对象
+将对象中的所有键值对取出来
+{                                 {
+    ...{X:100,Y:200}      =>            X:100,Y:200
+}                                 }
+因此
+--------------------------------------------------		
+			sum(){
+				return this.$store.state.sum
+			},
+            注:这是简写 完整写法是sum:function(){XXX}
+			school(){
+				return this.$store.state.school
+			},
+			subject(){
+				return this.$store.state.subject
+			}, 
+            
+            等同于
+	
+			...mapState({he:'sum',xuexiao:'school',xueke:'subject'}),
+
+            他们都写在计算属性里
+--------------------------------------------------		
+
+mapstate的返回值是
+{
+    he:函数名(){},
+    ...
+    ...
+}
+
+9.我们经常用对象的简写
+比如sum:sum => sum
+但是mapState这里不行
+这里是sum:'sum' 后面带的是字符串 不是变量
+简写可以是
+...mapState(['sum','school','subject'])
+要注意sum school subject一定是state里的属性
+
+10.mapGetters
+用法同mapState
+
+11.mapMutations
+...mapMutations({increment:'JIA',decrement:'JIAN'}),
+在组件中的methods中 生成increment方法,事件是JIA 生成decrement方法,事件是JIAN
+可以直接从组件传到mutations 直接触发mutations11中的JIA和JIAN
+注意 要在触发事件时注明参数 否则默认参数时鼠标事件
+如@click="increment(n)"
+借助mapMutations生成对应的方法，方法中会调用commit去联系mutations(对象写法)
+当函数名和事件相同 使用数组写法
+
+12.mapActions
+...mapActions({incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
+借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)
+同上
+
+13.总结 别弄混了
+组件:   按钮触发        @click="increment()" 函数名
+组件:   methods方法     increment(){} 函数名
+store:  actions中       小写事件名(){}
+store:  matutions中     大写事件名(){}
+
+...mapActions/...mapMutations({函数名:事件名}) 对象写法
+...mapState/...mapGetters(['属性名']) 数组写法
+
+14.我们常常把人员写成一个数组
+persons = [{},{}]
+里面是一堆对象
+push时就创建一个新对象 添加
+
+15.vuex模块化 略
+
+
+
+
+
+
+
+
+16.路由
+看老师总结
+写一个index文件 引入组件 引入router 创建在构造函数的参数里面创建router 
+然后在vm里添加router 引入router use router
+在需要展示的页面(如APP)写下
+router-link router-view标签

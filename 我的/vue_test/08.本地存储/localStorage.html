@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>设置缓存</button>
+    <button>访问缓存</button>
+    <button>删除缓存</button>
+    <button>清空缓存</button>
+    <script>
+        let btns = document.querySelectorAll('button')
+        const apple = {
+            color:'red',
+            name:'apple'
+        }
+        btns[0].addEventListener('click',function(){
+            localStorage.setItem('msg1','1')
+            localStorage.setItem('msg2','2')
+            localStorage.setItem('msg3',JSON.stringify(apple))
+        })
+
+        btns[1].addEventListener('click',function(){
+            console.log(
+            localStorage.getItem('msg1'),
+            localStorage.getItem('msg2'),
+            JSON.parse(localStorage.getItem('msg3'))
+            )
+        })
+
+        btns[2].addEventListener('click',function(){
+            localStorage.removeItem('msg1')
+        })
+
+        btns[3].addEventListener('click',function(){
+            localStorage.clear()
+        })
+    </script>
+</body>
+</html>

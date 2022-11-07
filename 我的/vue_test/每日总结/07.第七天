@@ -1,0 +1,49 @@
+2021.11.24
+07-12
+P73-P85
+
+
+1. tostring
+setitem当第二个参数不是字符串会调用
+toString() 方法返回字符串
+
+2.对象转字符串
+JSON.stringify(p)
+字符串转对象
+JSON.parse(result)
+
+3.本地存储API
+localStorage/sessionStorage + setItem getItem removeItem clear(不带Item)
+
+4.TODOLIST的本地存储
+watch不开启深度监视 只会监视第一层 即数组的第一层元素(监视的不是地址?)
+而不会监视数组元素对象的属性
+主要有两处新地方:APP 中的 watch 和 items
+
+5.{{XX}}
+xx的来源有三个地方 data props computed
+在方法里面得到的值 可以提前在data里面设置一个'' 再赋给他
+可以用vue.set吗?
+
+6.
+$off  解绑事件
+$on   绑定事件 绑定组件和事件,以及事件触发的对应回调函数 (回调函数会留在写$on语句的组件里)
+$emit 触发事件 让组件触发事件,并且传参
+
+7.为什么不能把组件通信x放在vc构造函数的原型上?
+因为每个组件的构造函数都是不同的!!!!原型也是不同的!!!!!
+
+*8.全局总线
+组件A和组件B通信(A->B)
+把vm作为$bus放到vue原型上
+那么$bus就有$on $emit $off的方法
+在vm的beforecreate中Vue.prototype.$bus = this
+$bus是一个自定义在vue原型上的属性 它的类型是vm
+
+组件A使用$on 让this.$bus(会顺着原型链找到x)绑定 自定义事件 和 回调函数(这个回调函数在A中执行) 
+一般被写在组件A的mounted中
+组件B使用$emit 让this.$bus执行自定义事件 并且传递参数(参数是组件B里面的)
+一般被写在methods中 合适的时候调用
+这样就完成了B传递参数 A接收参数并且执行回调函数
+
+最后 因为组件A绑定了自定义事件 在组件A的beofreDestroy中解绑这一个自定义事件(别把$bus的事件全解绑了)

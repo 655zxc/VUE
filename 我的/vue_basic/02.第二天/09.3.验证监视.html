@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    
+    <div class="box">
+        这是一个{{name}},总共有{{num[0]}}个
+        <button @click='show'>click to +1</button>
+    </div>
+    <script>
+        Vue.config.productionTip = false;     
+        new Vue({
+            el:'.box',
+            data:{
+                name : '苹果',
+                num:[1,2,3],
+            },
+            //num[0]没有get set 因此页面不会改变
+            //但是如果num[0]是对象就有set 无论多深 vue都可以给对象绑定set
+            methods:{
+                show(){
+                    // this.num[0]++
+                    this.num.splice(0,1,5)
+                    //当把语句写成splice 发现页面会改变 监视器也起作用了 
+                    //因此 监视器也需要set?
+                    console.log(this.num[0]);
+                }
+            },
+            watch:{
+                deep:true,
+                num:{
+                    handler(newValue,oldValue){
+                        console.log('被改变了');
+                    }
+                }
+            }
+        })  
+    </script>
+</body>
+</html>

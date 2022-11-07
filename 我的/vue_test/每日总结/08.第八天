@@ -1,0 +1,32 @@
+2021.11.25
+13-18
+P86-P95
+
+1.todolist的编辑
+思路
+点击编辑按钮事件 触发函数:添加isedit属性设置为true 并根据这个属性用v-show显示文本框
+文本框失焦事件 触发函数:isedit属性设置为false 并使用全局总线修改name
+
+问题1
+item是props传过来的一个对象 是vc的一个属性
+item.isedit = true
+发现页面没变?
+因为item.isedit这个属性没有set 不会引起页面更新
+需要使用this.$set(todo,'isedit',true)
+注意$set方法不能在根数据中添加 todo是一层数据 isedit是二层数据
+
+问题2
+// this.$refs.myinput.focus()
+//不可以 为什么?
+//因为47行走完后执行48行
+//模板并没有立刻被解析 执行48行的时候编辑框还没有出现
+使用 this.$nextTick
+也可以写一个立即执行的定时器
+
+
+2.js判断一个对象是否存在某个属性
+const obj = {age:16}
+// 返回表示对象在原型链上是否有特定属性的布尔值
+console.log('age' in obj)  
+// 返回一个表明对象是否具有特定属性的布尔值
+console.log(Object.prototype.hasOwnProperty.call(obj,'age'))

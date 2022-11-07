@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data1 = {
+            m:10,
+            n:20,
+        }//对象形式
+
+        let data2 = function(){
+            return {
+                m:10,
+                n:20,
+            }
+        }
+
+        const x1 = data1;
+        const x2 = data1;
+        // x1 x2 共用一个对象 是相同的
+
+        const x3 = data2();
+        const x4 = data2();
+        // x3 x4是不同的
+
+    </script>
+</body>
+</html>

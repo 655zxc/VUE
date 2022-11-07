@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    
+    <script>
+               
+
+        let number = 18;
+        let person = {
+            name:'tom',
+        }
+        //一开始 person中只有name
+
+        Object.defineProperty(person,'age',{
+            //然后 添加了age属性 age没有值
+            get(){
+                return number;
+            },//访问age 返回number的值
+
+            set(value){
+                number = value;
+                //修改age时 修改的是number的值
+            }
+
+            // age代理了number age没有值 访问age返回number
+        })
+    </script>
+</body>
+</html>

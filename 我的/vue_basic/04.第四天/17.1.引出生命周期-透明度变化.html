@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    
+    <div class="box">
+        <h2 :style = {opacity:n} @click = 'change'>透明度变化</h2>
+        <!-- 这里是style 等于一个对象 不用等于一个字符串
+        css中内联style的写法 -->
+    </div>
+    <script>
+        Vue.config.productionTip = false;      
+        new Vue({
+            el:'.box',
+            data:{
+                n:1,
+            },
+            methods:{
+                change(){
+                    setInterval(() => {
+                        this.n -= 0.01;
+                        if(this.n<=0){
+                            this.n = 1;
+                        }
+                    }, 16);
+                }
+            },//点击调用
+            mounted(){
+                setInterval(() => {
+                        this.n -= 0.01;
+                        if(this.n<=0){
+                            this.n = 1;
+                        }
+                    }, 16);
+            }//自动调用
+            
+        }) 
+    </script>
+</body>
+</html>

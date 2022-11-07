@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../笔记/vue_basic/js/vue.js"></script>
+</head>
+<body>
+    
+    <div class="box">
+        这是一个{{name}},总共有{{total}}
+    </div>
+    <script>
+        Vue.config.productionTip = false;     
+        new Vue({
+            el:'.box',
+            data:{
+                name : '苹果',
+            },
+            computed:{
+                total:{
+                    get(){
+                        return '10个'+this.name;
+                    }
+                }
+            },
+            watch:{
+                name:{
+                    handler(newValue,oldValue){
+                        console.log('被改变了',newValue,oldValue);
+                    }
+                }
+            }
+        })  
+    </script>
+</body>
+</html>
